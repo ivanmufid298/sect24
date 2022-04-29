@@ -4,16 +4,16 @@
     <ApolloMutation
       :mutation="
         (gql) => gql`
-          mutation MyMutation($text: String!) {
-            insert_todo_one(object: { text: $text }) {
-              text
+          mutation MyMutation($name: String!) {
+            insert_todo_one(object: { name: $name }) {
+              name
               id
             }
           }
         `
       "
       :variables="{
-        text: inputTodo,
+        name: inputTodo,
       }"
     >
       <template v-slot="{ mutate, loading, error }">
@@ -33,8 +33,8 @@
           (gql) => gql`
             query MyQuery {
               todo {
-                text
-                id
+                id 
+                name
               }
             }
           `
@@ -54,14 +54,14 @@
                 <ul>
                   <li>
                     {{ Todo.id }}
-                    {{ Todo.text }}
+                    {{ Todo.name }}
                     <ApolloMutation
                       :mutation="
                         (gql) => gql`
                           mutation MyMutation2($id: Int!) {
                             delete_todo_by_pk(id: $id) {
-                              text
                               id
+                              name
                             }
                           }
                         `
@@ -78,26 +78,26 @@
                     <ApolloMutation
                       :mutation="
                         (gql) => gql`
-                          mutation MyMutation3($id: Int!, $text: String!) {
-                            update_todo_by_pk(pk_columns: { id: $id }, _set: { text: $text }) {
-                              text
+                          mutation MyMutation3($id: Int!, $name: String!) {
+                            update_todo_by_pk(pk_columns: { id: $id }, _set: { name: $name }) {
                               id
+                              name
                             }
                           }
                         `
                       "
                       :variables="{
                         id: Todo.id,
-                        text: editTodo,
+                        name: editTodo,
                       }"
                     >
                       <template v-slot="{ mutate, loading, error }">
                         <div v-if="indexSelected === Todo.id" id="list-edit">
-                          <input type="text" v-model="editTodo" /><br />
+                          <input type="name" v-model="editTodo" /><br />
                           <input :disabled="loading" @click="mutate()" type="button" value="Update" />
                         </div>
                         <!--eslint-disable-next-line prettier/prettier-->
-                        <input v-if="isEdited" @click="EditTodo(Todo.text, Todo.id)" type="button" value="Edit" />
+                        <input v-if="isEdited" @click="EditTodo(Todo.name, Todo.id)" type="button" value="Edit" />
 
                         <p v-if="error">An error occurred: {{ error }}</p>
                       </template>
@@ -132,8 +132,8 @@ export default {
       this.isEnabled = false;
       this.isEdit = true;
     },
-    EditTodo(text, id) {
-      this.editTodo = text;
+    EditTodo(name, id) {
+      this.editTodo = name;
       this.indexSelected = id;
       this.isEdited = false;
     },

@@ -9,11 +9,11 @@ import router from "./router";
 Vue.config.productionTip = false;
 
 const httpLink = new HttpLink({
-  uri: "https://divine-firefly-50.hasura.app/v1/graphql",
+  uri: "https://genuine-poodle-14.hasura.app/v1/graphql",
 });
 
 const wsLink = new WebSocketLink({
-  uri: "ws://divine-firefly-50.hasura.app/v1/graphql",
+  uri: "ws://genuine-poodle-14.hasura.app/v1/graphqll",
   options: {
     reconnect: true,
   },
